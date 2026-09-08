@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>✨ Datos Curiosos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #fdf1f7;
+    --bg2: #f6ecfb;
+    --ink: #4a2e46;
+    --accent: #ec6fa8;
+    --accent-dark: #d84f8c;
+    --lav: #b18cd9;
+    --card: #ffffff;
+    --line: #f2d8e6;
+    --muted: #a887a3;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: linear-gradient(160deg, var(--bg), var(--bg2) 70%);
+    background-attachment: fixed;
+    color: var(--ink);
+    font-family: 'Quicksand', sans-serif;
+    line-height: 1.5;
+  }
+  header {
+    padding: 2.2rem 1.5rem 1.2rem;
+    max-width: 720px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  h1 {
+    font-size: 2rem;
+    margin: 0;
+    font-weight: 700;
+    background: linear-gradient(90deg, var(--accent-dark), var(--lav));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  header p {
+    margin: 0.3rem 0 0;
+    color: var(--muted);
+    font-size: 0.95rem;
+    font-family: 'Poppins', sans-serif;
+  }
+  main {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0.5rem 1.5rem 3rem;
+  }
+  #auth-area { text-align: right; font-family: 'Poppins', sans-serif; flex-shrink: 0; }
+  .btn {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    background: linear-gradient(90deg, var(--accent), var(--lav));
+    color: white;
+    border: none;
+    padding: 0.6rem 1.1rem;
+    border-radius: 999px;
+    cursor: pointer;
+    font-size: 0.88rem;
+    box-shadow: 0 3px 10px rgba(216, 79, 140, 0.25);
+  }
+  .btn:hover { filter: brightness(1.05); }
+  .btn.secondary {
+    background: transparent;
+    color: var(--accent-dark);
+    border: 1.5px solid var(--line);
+    box-shadow: none;
+  }
+  .btn.chip {
+    padding: 0.4rem 0.9rem;
+    font-size: 0.82rem;
+    background: var(--card);
+    color: var(--accent-dark);
+    border: 1.5px solid var(--line);
+    box-shadow: none;
+  }
+  .btn.chip.activo {
+    background: linear-gradient(90deg, var(--accent), var(--lav));
+    color: white;
+    border-color: transparent;
+  }
+  .user-chip {
+    font-size: 0.82rem;
+    color: var(--muted);
+    margin-bottom: 0.4rem;
+  }
+  #form-area {
+    display: none;
+    margin: 1.2rem 0 1.6rem;
+    padding: 1.3rem;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    font-family: 'Poppins', sans-serif;
+    box-shadow: 0 6px 18px rgba(177, 140, 217, 0.12);
+  }
+  #form-area textarea {
+    width: 100%;
+    min-height: 80px;
+    padding: 0.7rem;
+    border: 1.5px solid var(--line);
+    border-radius: 12px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.95rem;
+    resize: vertical;
+  }
+  #form-area textarea:focus,
+  #form-area input:focus { outline: none; border-color: var(--accent); }
+  #form-area input[type="text"] {
+    width: 100%;
+    padding: 0.55rem 0.7rem;
+    border: 1.5px solid var(--line);
+    border-radius: 12px;
+    font-family: 'Poppins', sans-serif;
+    margin-bottom: 0.7rem;
+  }
+  .field-label {
+    display: block;
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin-bottom: 0.3rem;
+    font-weight: 600;
+  }
+
+  /* --- BARRA DE FILTROS --- */
+  #filtros {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+    margin: 1.4rem 0 0.4rem;
+    font-family: 'Poppins', sans-serif;
+  }
+  #filtros .grupo {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+  }
+  #filtros .separador {
+    width: 1px;
+    height: 20px;
+    background: var(--line);
+    margin: 0 0.3rem;
+  }
+  #orden-select {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.82rem;
+    color: var(--accent-dark);
+    border: 1.5px solid var(--line);
+    border-radius: 999px;
+    padding: 0.4rem 0.8rem;
+    background: var(--card);
+    cursor: pointer;
+  }
+
+  #lista { list-style: none; padding: 0; margin: 1.2rem 0 0; }
+  .curiosidad {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 1.1rem 1.2rem;
+    margin-bottom: 0.9rem;
+    box-shadow: 0 4px 14px rgba(177, 140, 217, 0.10);
+    position: relative;
+  }
+  .curiosidad::before {
+    content: "💗";
+    position: absolute;
+    top: -10px;
+    left: 16px;
+    font-size: 1rem;
+  }
+  .curiosidad p { margin: 0.4rem 0 0.7rem; font-size: 1.05rem; }
+  .curiosidad .meta {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.76rem;
+    color: var(--muted);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .curiosidad .autor {
+    font-weight: 600;
+    color: var(--accent-dark);
+  }
+  .curiosidad .categoria-tag {
+    display: inline-block;
+    background: var(--bg2);
+    color: var(--lav);
+    padding: 0.15rem 0.55rem;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    margin-right: 0.4rem;
+  }
+  .curiosidad .meta button {
+    background: none;
+    border: none;
+    color: #c96b8d;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.76rem;
+    padding: 0;
+    text-decoration: underline;
+  }
+  #estado {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.9rem;
+    color: var(--muted);
+    padding: 2rem 0;
+    text-align: center;
+  }
+  .oculto { display: none !important; }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>✨ Datos Curiosos</h1>
+    <p>Un dato distinto cada vez que se te ocurra uno 🌸</p>
+  </div>
+  <div id="auth-area">
+    <button id="btn-login" class="btn">Entrar con Google</button>
+    <div id="logged-area" class="oculto">
+      <div class="user-chip" id="user-chip"></div>
+      <button id="btn-logout" class="btn secondary">Salir</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div id="estado">Cargando…</div>
+
+  <div id="form-area">
+    <span class="field-label">Nuevo dato curioso</span>
+    <textarea id="input-texto" placeholder="Escribe el dato curioso aquí..."></textarea>
+    <br><br>
+    <span class="field-label">Categoría (opcional)</span>
+    <input type="text" id="input-categoria" placeholder="ej: animales, espacio, historia..." />
+    <button id="btn-guardar" class="btn">Publicar 💌</button>
+  </div>
+
+  <div id="filtros" class="oculto">
+    <div class="grupo" id="filtro-autor">
+      <button class="btn chip activo" data-autor="todos">Todos</button>
+      <!-- Los botones de cada persona se generan por JS -->
+    </div>
+    <div class="separador"></div>
+    <select id="orden-select">
+      <option value="desc">Más recientes primero</option>
+      <option value="asc">Más antiguos primero</option>
+    </select>
+  </div>
+
+  <ul id="lista"></ul>
+</main>
+
+<!-- SDK de Firebase (versión compat) -->
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore-compat.js"></script>
+
+<script>
+  // ==========================================================
+  // 1. CONFIGURACIÓN DE FIREBASE
+  // ==========================================================
+  const firebaseConfig = {
+    apiKey: "AIzaSyDVFJsu11uerLiJu5HECT_O6Tdf9O5bbdY",
+    authDomain: "datoscuriosos-4c70a.firebaseapp.com",
+    projectId: "datoscuriosos-4c70a",
+    storageBucket: "datoscuriosos-4c70a.firebasestorage.app",
+    messagingSenderId: "570150831050",
+    appId: "1:570150831050:web:f7682e3cd06897252c4533"
+  };
+
+  // ==========================================================
+  // 2. CORREOS AUTORIZADOS Y SUS NOMBRES
+  // Cambia el nombre por el que quieras que se muestre en la web
+  // en vez del correo completo.
+  // ==========================================================
+  const NOMBRES = {
+    "marlondiazaranda1@gmail.com": "David",
+    "arantxasanchezvargas03@gmail.com": "Arantxa"
+  };
+  const CORREOS_AUTORIZADOS = Object.keys(NOMBRES);
+
+  function nombreDe(correo) {
+    return NOMBRES[correo] || correo;
+  }
+
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+  const db = firebase.firestore();
+  const provider = new firebase.auth.GoogleAuthProvider();
+
+  const btnLogin = document.getElementById("btn-login");
+  const btnLogout = document.getElementById("btn-logout");
+  const loggedArea = document.getElementById("logged-area");
+  const userChip = document.getElementById("user-chip");
+  const formArea = document.getElementById("form-area");
+  const estado = document.getElementById("estado");
+  const lista = document.getElementById("lista");
+  const filtrosArea = document.getElementById("filtros");
+  const filtroAutorArea = document.getElementById("filtro-autor");
+  const ordenSelect = document.getElementById("orden-select");
+
+  let esAutorizado = false;
+  let todosLosDatos = [];   // cache local de todos los documentos
+  let filtroAutorActivo = "todos";
+  let ordenActual = "desc";
+
+  // --- Generar los botones de filtro por persona (uno por cada correo autorizado) ---
+  CORREOS_AUTORIZADOS.forEach((correo) => {
+    const btn = document.createElement("button");
+    btn.className = "btn chip";
+    btn.textContent = nombreDe(correo);
+    btn.dataset.autor = correo;
+    filtroAutorArea.appendChild(btn);
+  });
+
+  filtroAutorArea.addEventListener("click", (e) => {
+    const btn = e.target.closest("button[data-autor]");
+    if (!btn) return;
+    filtroAutorActivo = btn.dataset.autor;
+    [...filtroAutorArea.querySelectorAll("button")].forEach((b) =>
+      b.classList.toggle("activo", b === btn)
+    );
+    render();
+  });
+
+  ordenSelect.addEventListener("change", () => {
+    ordenActual = ordenSelect.value;
+    render();
+  });
+
+  // --- LOGIN / LOGOUT ---
+  btnLogin.addEventListener("click", () => {
+    auth.signInWithPopup(provider).catch((err) => {
+      alert("No se pudo iniciar sesión: " + err.message);
+    });
+  });
+
+  btnLogout.addEventListener("click", () => auth.signOut());
+
+  auth.onAuthStateChanged((user) => {
+    if (user) {
+      esAutorizado = CORREOS_AUTORIZADOS.includes(user.email);
+      btnLogin.classList.add("oculto");
+      loggedArea.classList.remove("oculto");
+      userChip.textContent = "Hola, " + nombreDe(user.email) + (esAutorizado ? " 🌷" : " (sin permiso)");
+      formArea.style.display = esAutorizado ? "block" : "none";
+    } else {
+      esAutorizado = false;
+      btnLogin.classList.remove("oculto");
+      loggedArea.classList.add("oculto");
+      formArea.style.display = "none";
+    }
+    render();
+  });
+
+  // --- GUARDAR NUEVO DATO CURIOSO ---
+  document.getElementById("btn-guardar").addEventListener("click", async () => {
+    const texto = document.getElementById("input-texto").value.trim();
+    const categoria = document.getElementById("input-categoria").value.trim();
+    if (!texto) return alert("Escribe un dato curioso antes de publicar.");
+
+    try {
+      await db.collection("curiosidades").add({
+        texto,
+        categoria: categoria || "general",
+        autor: auth.currentUser.email,
+        creado: firebase.firestore.FieldValue.serverTimestamp()
+      });
+      document.getElementById("input-texto").value = "";
+      document.getElementById("input-categoria").value = "";
+    } catch (err) {
+      alert("No se pudo guardar: " + err.message);
+    }
+  });
+
+  // --- BORRAR ---
+  async function borrar(id) {
+    if (!confirm("¿Borrar este dato curioso?")) return;
+    try {
+      await db.collection("curiosidades").doc(id).delete();
+    } catch (err) {
+      alert("No se pudo borrar: " + err.message);
+    }
+  }
+
+  // --- ESCUCHAR TODA LA COLECCIÓN (guardamos en caché y filtramos/ordenamos en el cliente) ---
+  db.collection("curiosidades").onSnapshot(
+    (snapshot) => {
+      todosLosDatos = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+      render();
+    },
+    (err) => {
+      estado.textContent = "Error cargando datos: " + err.message;
+      estado.classList.remove("oculto");
+    }
+  );
+
+  // --- RENDER: aplica filtro por persona + orden por fecha, y dibuja la lista ---
+  function render() {
+    filtrosArea.classList.toggle("oculto", todosLosDatos.length === 0);
+
+    let datos = [...todosLosDatos];
+
+    if (filtroAutorActivo !== "todos") {
+      datos = datos.filter((d) => d.autor === filtroAutorActivo);
+    }
+
+    datos.sort((a, b) => {
+      const ta = a.creado ? a.creado.toMillis() : 0;
+      const tb = b.creado ? b.creado.toMillis() : 0;
+      return ordenActual === "desc" ? tb - ta : ta - tb;
+    });
+
+    lista.innerHTML = "";
+
+    if (datos.length === 0) {
+      estado.textContent = todosLosDatos.length === 0
+        ? "Todavía no hay datos curiosos. ¡Agrega el primero! 🌸"
+        : "No hay datos curiosos con este filtro.";
+      estado.classList.remove("oculto");
+      return;
+    }
+
+    estado.classList.add("oculto");
+
+    datos.forEach((d) => {
+      const li = document.createElement("li");
+      li.className = "curiosidad";
+      const fecha = d.creado ? d.creado.toDate().toLocaleDateString() : "";
+      li.innerHTML = `
+        <p>${escapeHtml(d.texto)}</p>
+        <div class="meta">
+          <span>
+            <span class="categoria-tag">${escapeHtml(d.categoria || "general")}</span>
+            <span class="autor">${escapeHtml(nombreDe(d.autor))}</span> · ${fecha}
+          </span>
+          ${esAutorizado ? `<button data-id="${d.id}">Borrar</button>` : ""}
+        </div>
+      `;
+      if (esAutorizado) {
+        li.querySelector("button")?.addEventListener("click", () => borrar(d.id));
+      }
+      lista.appendChild(li);
+    });
+  }
+
+  function escapeHtml(str) {
+    const div = document.createElement("div");
+    div.textContent = str;
+    return div.innerHTML;
+  }
+</script>
+
+</body>
+</html>
